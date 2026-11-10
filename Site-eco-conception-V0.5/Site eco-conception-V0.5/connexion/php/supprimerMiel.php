@@ -1,10 +1,20 @@
 <?php
-   session_start();
+    session_start();
+    if (!isset($_SESSION['user'])) {
+        header('Location: ../index.php');
+        exit;
+    }
+
     require_once("ClassMiel.php");
 
-    // Pas connecté ou pas en POST : on renvoie vers la connexion
-    if (!isset($_SESSION['user']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
-        header('Location: ../index.php');
+    $csrfToken = $_POST['csrf_token'] ?? null;
+    if (!is_string($csrfToken) || !isset($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $csrfToken)) {
+        header('Location: ../backend.php');
+        exit;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        header('Location: ../backend.php');
         exit;
     }
 
@@ -18,4 +28,5 @@
     $miel = new ClassMiel();
     $miel->removeMiel($id);
     header('Location: ../backend.php');
+    exit;
 ?>

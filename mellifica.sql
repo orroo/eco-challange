@@ -39,13 +39,13 @@ CREATE TABLE `miel` (
 --
 
 INSERT INTO `miel` (`id`, `type`, `photo`) VALUES
-(1, 'Miel d’acacia', './img/miels/Acacia.png'),
-(2, 'Miel de châtaignier', './img/miels/Chataignier.png'),
-(3, 'Miel de colza', './img/miels/Colza.png'),
-(4, 'Miel de lavande', './img/miels/Lavande.png'),
-(5, 'Miel de romarin', './img/miels/Romarin.png'),
-(6, 'Miel de toute fleurs', './img/miels/TouteFleurs.png'),
-(7, 'Miel de tilleul', './img/miels/Tilleul.png');
+(1, 'Miel d’acacia', './img/miels/Acacia.webp'),
+(2, 'Miel de châtaignier', './img/miels/Chataignier.webp'),
+(3, 'Miel de colza', './img/miels/Colza.webp'),
+(4, 'Miel de lavande', './img/miels/Lavande.webp'),
+(5, 'Miel de romarin', './img/miels/Romarin.webp'),
+(6, 'Miel de toute fleurs', './img/miels/TouteFleurs.webp'),
+(7, 'Miel de tilleul', './img/miels/Tilleul.webp');
 
 -- --------------------------------------------------------
 
@@ -83,9 +83,9 @@ CREATE TABLE `produitderive` (
 --
 
 INSERT INTO `produitderive` (`id`, `produit`, `photo`) VALUES
-(1, 'Propolis', './img/produitsDerives/propolis.jpg'),
+(1, 'Propolis', './img/produitsDerives/propolis.webp'),
 (2, 'Bougies', './img/produitsDerives/bougie.webp'),
-(3, 'Gelée royale', './img/produitsDerives/gelee.jpg');
+(3, 'Gelée royale', './img/produitsDerives/gelee.webp');
 
 -- --------------------------------------------------------
 

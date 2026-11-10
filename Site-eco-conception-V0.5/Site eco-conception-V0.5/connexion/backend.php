@@ -1,7 +1,6 @@
 <?php
     require_once("./php/session.php");
     // if(!isset($_SESSION['user'])){
-    session_start();
     if (!isset($_SESSION['user'])) {
         header('Location: ../index.php');
         exit;
@@ -93,6 +92,10 @@
                         <?php foreach ($miels as $unMiel): ?>
                             <?php $type = $unMiel['type'] ?? ''; ?>
                             <article class="stock-card">
+                                <div
+                                    data-stock-id="<?= (int) $unMiel['id'] ?>"
+                                    data-csrf-token="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>"
+                                ></div>
                                 <div class="stock-photo">
                                     <?php if (!empty($unMiel['photo'])): ?>
                                         <img
@@ -117,9 +120,9 @@
                                                 class="quantity-button"
                                                 data-quantity-change="-1"
                                                 aria-label="Diminuer la quantité de <?= htmlspecialchars($type, ENT_QUOTES, 'UTF-8') ?>"
-                                                disabled
+                                                <?= (int) ($unMiel['stock'] ?? 0) <= 0 ? 'disabled' : '' ?>
                                             >−</button>
-                                            <output class="stock-quantity" aria-live="polite">0</output>
+                                            <output class="stock-quantity" aria-live="polite"><?= (int) ($unMiel['stock'] ?? 0) ?></output>
                                             <button
                                                 type="button"
                                                 class="quantity-button"
@@ -128,6 +131,7 @@
                                             >+</button>
                                         </div>
                                     </div>
+                                    <p class="stock-update-status" role="status" aria-live="polite"></p>
                                     <div class="stock-actions">
                                         <button
                                             type="button"

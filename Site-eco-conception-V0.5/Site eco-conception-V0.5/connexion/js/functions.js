@@ -5,18 +5,52 @@ function envoiFormulaire(form) {
     form.requestSubmit();
 }
 
+async function updateStock(button) {
+    const stockCard = button.closest('.stock-card');
+    const quantity = stockCard.querySelector('.stock-quantity');
+    const status = stockCard.querySelector('.stock-update-status');
+    const buttons = stockCard.querySelectorAll('[data-quantity-change]');
+
+    buttons.forEach((stockButton) => {
+        stockButton.disabled = true;
+    });
+    status.textContent = '';
+
+    try {
+        const response = await fetch('./php/modifierstock.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+                'Accept': 'application/json',
+            },
+            body: new URLSearchParams({
+                id: stockCard.querySelector('[data-stock-id]').dataset.stockId,
+                action: button.dataset.quantityChange === '1' ? 'plus' : 'moins',
+                csrf_token: stockCard.querySelector('[data-stock-id]').dataset.csrfToken,
+            }),
+        });
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.error || 'Échec de la mise à jour du stock.');
+        }
+
+        quantity.textContent = String(result.stock);
+    } catch (error) {
+        status.textContent = error.message || 'Le stock n’a pas pu être enregistré. Réessayez.';
+    } finally {
+        const currentStock = Number(quantity.textContent);
+        buttons.forEach((stockButton) => {
+            stockButton.disabled = stockButton.dataset.quantityChange === '-1' && currentStock === 0;
+        });
+    }
+}
+
 document.addEventListener('click', function (event) {
     const quantityButton = event.target.closest('[data-quantity-change]');
 
     if (quantityButton) {
-        const stockCard = quantityButton.closest('.stock-card');
-        const quantity = stockCard.querySelector('.stock-quantity');
-        const currentValue = Number(quantity.textContent);
-        const change = Number(quantityButton.dataset.quantityChange);
-        const nextValue = Math.max(0, currentValue + change);
-
-        quantity.textContent = String(nextValue);
-        stockCard.querySelector('[data-quantity-change="-1"]').disabled = nextValue === 0;
+        void updateStock(quantityButton);
         return;
     }
 

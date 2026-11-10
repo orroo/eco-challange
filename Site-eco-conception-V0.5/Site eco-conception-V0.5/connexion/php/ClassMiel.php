@@ -60,25 +60,66 @@ class ClassMiel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Ajouter ou retirer du stock : $delta = +1 ou -1
-public function changerStock(int $id, int $delta): bool {
-    if ($id <= 0) {
+    public function changerStock(int $id, int $delta): ?int {
+        if ($id <= 0 || !in_array($delta, [-1, 1], true)) {
+            return null;
+        }
+
+        $this->pdo->beginTransaction();
+
+        try {
+            $stmt = $this->pdo->prepare(
+                "SELECT stock FROM miel WHERE id = :id FOR UPDATE"
+            );
+            $stmt->execute(['id' => $id]);
+            $stock = $stmt->fetchColumn();
+
+            if ($stock === false) {
+                $this->pdo->rollBack();
+                return null;
+            }
+
+            $nextStock = max(0, (int) $stock + $delta);
+            $stmt = $this->pdo->prepare(
+                "UPDATE miel SET stock = :stock WHERE id = :id"
+            );
+            $stmt->execute([
+                'stock' => $nextStock,
+                'id' => $id,
+            ]);
+
+            $this->pdo->commit();
+            return $nextStock;
+        } catch (Throwable $error) {
+            if ($this->pdo->inTransaction()) {
+                $this->pdo->rollBack();
+            }
+            throw $error;
+        }
+    }
+
+public function updateMiel(int $id, string $type, string $photo): bool {
+    $type = trim($type);
+    $photo = trim($photo);
+
+    if ($id <= 0 || $type === '' || $photo === '') {
         return false;
     }
 
-    // GREATEST(x, 0) empêche le stock de descendre sous 0
-    // Exemple : stock 5, delta +1 -> GREATEST(6, 0) = 6
-    // Exemple : stock 0, delta -1 -> GREATEST(-1, 0) = 0
-    $sql = "UPDATE miel
-            SET stock = GREATEST(stock + :delta, 0)
-            WHERE id = :id";
+    if (strlen($type) > 255 || strlen($photo) > 255) {
+        return false;
+    }
 
+    $sql = "UPDATE miel SET type = :type, photo = :photo WHERE id = :id";
     $stmt = $this->pdo->prepare($sql);
 
     return $stmt->execute([
-        'delta' => $delta,
-        'id' => $id
+        'id' => $id,
+        'type' => $type,
+        'photo' => $photo
     ]);
 }
+
+
 }
 ?>

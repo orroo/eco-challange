@@ -11,7 +11,8 @@
     $type  = $_POST['type'] ?? '';
     $photo = $_POST['photo'] ?? '';
     // filter_input renvoie false si ce n'est pas un entier valide
-    $stock = filter_input(INPUT_POST, 'stock', FILTER_VALIDATE_INT);
+    $stockInput = $_POST['stock'] ?? '0';
+    $stock = filter_var($stockInput, FILTER_VALIDATE_INT);
 
     // && : les 3 champs doivent être valides (avant, || en acceptait un seul)
     if ($type !== '' && $photo !== '' && $stock !== false && $stock !== null && $stock >= 0) {

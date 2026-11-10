@@ -30,7 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `miel` (
   `id` int(11) NOT NULL,
   `type` varchar(255) DEFAULT NULL,
-  `photo` varchar(255) DEFAULT NULL
+  `photo` varchar(255) DEFAULT NULL,
+  `stock` int(10) unsigned NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

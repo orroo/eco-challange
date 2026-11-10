@@ -23,7 +23,7 @@
         </div>
         <div class="discover-grid">
             <a class="discover-card" href="#" onclick="loadPage(this, event)" data-page="Miels">
-                <div class="card-image card-honey"><img src="./img/miels/Collection de Miels Français sur Fond Vert.png" alt="" /></div>
+                <div class="card-image card-honey"><img src="./img/miels/TouteFleurs.webp" alt="" /></div>
                 <div class="card-heading"><div><span>01 / LES SAVEURS</span><h3>Nos miels</h3></div><span class="card-arrow">↗</span></div>
                 <p>Une belle palette de saveurs à découvrir.</p>
             </a>
@@ -33,7 +33,7 @@
                 <p>De belles découvertes inspirées par la ruche.</p>
             </a>
             <a class="discover-card" href="#" onclick="loadPage(this, event)" data-page="Fabrication">
-                <div class="card-image"><img src="./img/img01.jpg" alt="" /></div>
+                <div class="card-image"><img src="./PhotosSlider/img04.webp" alt="" /></div>
                 <div class="card-heading"><div><span>03 / LE SAVOIR-FAIRE</span><h3>La fabrication</h3></div><span class="card-arrow">↗</span></div>
                 <p>Un voyage au cœur du travail des abeilles.</p>
             </a>

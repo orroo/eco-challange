@@ -64,7 +64,7 @@ CREATE TABLE `photoaccueil` (
 --
 
 INSERT INTO `photoaccueil` (`id`, `photo`, `alt`) VALUES
-(0, './img/imgAccueil.jpg', 'Photo accueil');
+(0, './PhotosSlider/img04.webp', 'Photo accueil');
 
 -- --------------------------------------------------------
 

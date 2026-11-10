@@ -12,10 +12,10 @@
     <body>
         <header class="site-header">
             <a class="brand" href="../index.html" aria-label="Mellifica, accueil">
-                <img id="logo" src="img/logo_Mellifica.png" alt="Logo de Mellifica" />
+                <img id="logo" src="../img/logo_Mellifica-100x73.png" alt="Logo de Mellifica" width="100" height="73" />
                 <span id="titre">Mellifica</span>
             </a>
-            <img id="gif" src="./gif/abeille.gif" alt="Abeille en vol">
+            <img id="gif" src="../gif/abeille-100x56.gif" alt="" width="100" height="56">
         </header>
         <main>
             <section class="connexion-card" aria-labelledby="soustitre">

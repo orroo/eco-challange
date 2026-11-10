@@ -19,18 +19,6 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- <title>Mellifica</title>
-        <link href="../assets/connexion.min.css" rel="stylesheet" />
-        <script src="../assets/connexion.min.js" defer></script>
-    </head>
-    <body>
-        <header>
-            <img id="logo" src="../img/logo_Mellifica-100x73.png" alt="Logo de Mellifica" width="100" height="73" />
-            <div id="titre">Mellifica</div>
-            <img id="gif" src="../gif/abeille-100x56.gif" alt="" width="100" height="56">
-        </header>
-        <form id="formDeconnexion" action="./php/deconnexion.php" method="GET">
-                <div class="bouton" onclick="envoiFormulaire(this.closest('form'))">Déconnexion</div> -->
         <title>Gestion des stocks | Mellifica</title>
         <link href="style.css?v=6" rel="stylesheet">
         <script src="./js/functions.js"></script>
@@ -38,10 +26,10 @@
     <body class="admin-page">
         <header class="admin-header">
             <a class="admin-brand" href="./index.php" aria-label="Retour à la page de connexion Mellifica">
-                <img id="logo" src="img/logo_Mellifica.png" alt="">
+                <img id="logo" src="../img/logo_Mellifica-100x73.png" alt="" width="100" height="73">
                 <span>Mellifica</span>
             </a>
-            <img class="admin-bee" src="./gif/abeille.gif" alt="">
+            <img class="admin-bee" src="../gif/abeille-100x56.gif" alt="" width="100" height="56">
             <form class="admin-logout-form" action="./php/deconnexion.php" method="GET">
                 <button class="admin-logout" type="submit">Déconnexion</button>
             </form>
@@ -90,7 +78,10 @@
                 <?php else: ?>
                     <div class="stock-grid">
                         <?php foreach ($miels as $unMiel): ?>
-                            <?php $type = $unMiel['type'] ?? ''; ?>
+                            <?php
+                                $type = $unMiel['type'] ?? '';
+                                $photoPath = ltrim((string) ($unMiel['photo'] ?? ''), './');
+                            ?>
                             <article class="stock-card">
                                 <div
                                     data-stock-id="<?= (int) $unMiel['id'] ?>"
@@ -99,7 +90,7 @@
                                 <div class="stock-photo">
                                     <?php if (!empty($unMiel['photo'])): ?>
                                         <img
-                                            src="<?= htmlspecialchars($unMiel['photo'], ENT_QUOTES, 'UTF-8') ?>"
+                                            src="../<?= htmlspecialchars($photoPath, ENT_QUOTES, 'UTF-8') ?>"
                                             alt="<?= htmlspecialchars($type, ENT_QUOTES, 'UTF-8') ?>"
                                             loading="lazy"
                                         >
